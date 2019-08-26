@@ -13,7 +13,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
   },
   signIn: {
     marginLeft: theme.spacing(2),
@@ -32,7 +31,6 @@ const NavTopBar: React.FC = () => {
             size="small"
             aria-label="account of current user"
             aria-controls="menu-appbar"
-            // onClick={handleMenu}
             color="inherit"
           >
             <AccountCircle fontSize="large" />

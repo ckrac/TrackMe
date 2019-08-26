@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import NavTopBar from './NavTopBar';
 import NavDrawer from './NavDrawer';
 import { makeStyles, createStyles, useTheme } from '@material-ui/core/styles';
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Layout: FunctionComponent = ({ children }) => {
+const Layout: FC = ({ children }) => {
   const theme = useTheme();
   const classes = useStyles(theme);
 

@@ -1,5 +1,10 @@
-export interface NavLinkInterface {
+import { ESVGIcon } from '../enums';
+
+export interface INavLink {
   name: string;
-  icon: string;
-  route?: string;
+  route: string;
+}
+
+export interface INavLinkIcon extends INavLink {
+  icon: ESVGIcon;
 }
