@@ -1,4 +1,10 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
+import {
+  Link,
+  LinkProps,
+  RouteComponentProps,
+  withRouter,
+} from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -10,10 +16,10 @@ import {
   withWidth,
   Theme,
 } from '@material-ui/core';
-import InboxIcon from '@material-ui/icons/Inbox';
-import MailIcon from '@material-ui/icons/Mail';
 import { WithWidthProps } from '@material-ui/core/withWidth';
-import { NavLinkInterface } from '../../interfaces';
+import { INavLinkIcon } from '../../interfaces';
+import { ESVGIcon } from '../../enums';
+import SVGIcon from '../SVGIcon/SVGIcon';
 
 const drawerWidth = 240;
 
@@ -47,20 +53,34 @@ const useStyles = makeStyles((theme: Theme) => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-const NavDrawer: FunctionComponent<WithWidthProps> = ({ width }) => {
+const AdapterLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
+  (props, ref) => <Link innerRef={ref as any} {...props} />,
+);
+
+const NavDrawer: FC<RouteComponentProps<{}> & WithWidthProps> = ({
+  location,
+  width,
+}) => {
   const classes = useStyles();
   const isSmWidth = width === 'sm';
+  const pathName = location.pathname;
 
-  const navLinks: NavLinkInterface[] = [
-    { name: 'Timer', icon: '' },
-    { name: 'Activities', icon: '' },
-    { name: 'Reports', icon: '' },
+  const navLinks: INavLinkIcon[] = [
+    { name: 'Timer', icon: ESVGIcon.Timer, route: '/app/timer' },
+    { name: 'Activities', icon: ESVGIcon.Menubook, route: '/app/activities' },
+    { name: 'Reports', icon: ESVGIcon.Assessment, route: '/app/reports' },
   ];
 
-  const listLinks = navLinks.map((navLink, index) => (
-    <ListItem button key={navLink.name}>
+  const listLinks = navLinks.map(navLink => (
+    <ListItem
+      key={navLink.name}
+      button
+      component={AdapterLink}
+      to={navLink.route!}
+      selected={navLink.route === pathName}
+    >
       <ListItemIcon>
-        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+        <SVGIcon icon={navLink.icon} />
       </ListItemIcon>
       <ListItemText primary={navLink.name} />
     </ListItem>
@@ -87,4 +107,4 @@ const NavDrawer: FunctionComponent<WithWidthProps> = ({ width }) => {
   );
 };
 
-export default withWidth()(NavDrawer);
+export default withRouter(withWidth()(NavDrawer));
